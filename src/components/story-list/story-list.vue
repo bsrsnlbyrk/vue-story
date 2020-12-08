@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import Story from "../story/story";
 
@@ -33,12 +33,9 @@ export default {
     }
   },
   components: {
-    story: Story,
+    Story,
     Swiper,
     SwiperSlide
-  },
-  directives: {
-    swiper: directive
   },
   data() {
     return {
@@ -56,9 +53,6 @@ export default {
   computed: {
     slicedStories() {
       return this.stories.slice(0, this.itemNumber);
-    },
-    swiper() {
-      return this.$refs.serpPostsModuleSwiper.$swiper;
     }
   },
   mounted() {
@@ -71,12 +65,20 @@ export default {
 };
 </script>
 <style scoped>
+.story-list {
+  display: flex;
+}
 .swiper {
   height: 300px;
   width: 100%;
 }
+.swiper-wrapper > div {
+  display: inherit;
+  overflow-x: scroll;
+}
 .swiper-slide {
   display: flex;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   text-align: center;
