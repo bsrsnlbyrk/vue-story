@@ -21,7 +21,7 @@
 </template>
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+// import "swiper/css/swiper.css";
 import Story from "../story/story";
 
 export default {

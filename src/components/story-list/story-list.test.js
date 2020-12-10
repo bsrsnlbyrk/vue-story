@@ -5,18 +5,13 @@ import * as storiesJson from '../../stories.json';
 describe('story list component test', () => {
     const wrapper = mount(StoryList, {
         propsData: {
-            stories: [{ id: 123 }]
+            stories: storiesJson.default
         },
         data() {
             return {
                 itemNumber: 5
             }
         },
-        computed: {
-            slicedStories() {
-                return storiesJson.default.slice(0, this.itemNumber);
-            }
-        }
     });
     /* beforeEach(() => {
         wrapper.vm.itemNumber = 5;
