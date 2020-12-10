@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import Story from './story'
 
-describe('story', () => {
+describe('story component tests', () => {
     const wrapper = mount(Story, {
         propsData: {
             story: {

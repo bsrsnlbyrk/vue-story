@@ -14,8 +14,8 @@
       </swiper-slide>
     </swiper>
     <div>
-      <button class="swiper-button-prev"></button>
-      <button class="swiper-button-next"></button>
+      <button class="swiper-button-prev" @click="goBack"></button>
+      <button class="swiper-button-next" @click="goNext"></button>
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       itemNumber: 8,
+      initialItemNumber: 0,
       swiperOption: {
         slidesPerView: 7,
         spaceBetween: 30,
@@ -56,11 +57,17 @@ export default {
     }
   },
   mounted() {
-    document
-      .querySelector(".swiper-button-next")
-      .addEventListener("click", () => {
-        this.itemNumber += 1;
-      });
+    this.initialItemNumber = this.itemNumber;
+  },
+  methods: {
+    goNext() {
+      this.itemNumber += 1;
+    },
+    goBack() {
+      if (this.itemNumber > this.initialItemNumber) {
+        this.itemNumber -= 1;
+      }
+    }
   }
 };
 </script>

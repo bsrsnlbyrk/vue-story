@@ -25,6 +25,7 @@ export default {
   },
   mounted() {
     this.$eventHub.$on('open_story', openedStory => {
+      console.log('on open story');
       this.hasOpenedStory = true;
       this.openedStory = openedStory;
     });
