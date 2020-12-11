@@ -44,9 +44,12 @@ describe('full screen story component test', () => {
     });
 
     it('components test', () => {
-        expect(wrapper.findComponent({ name: 'StoryList' }).exists()).toBe(true);
-        // expect(wrapper.findComponent({ name: 'StoryView' }).exists()).toBe(true);
+        expect(wrapper.findComponent({ name: 'ProgressBar' }).exists()).toBe(true);
+        expect(wrapper.findComponent({ name: 'NavButtons' }).exists()).toBe(true);
+        expect(wrapper.findComponent({ name: 'StoryNavbarList' }).exists()).toBe(true);
+        expect(wrapper.findComponent({ name: 'StoryNavbarListItem' }).exists()).toBe(true);
         expect(wrapper.findComponent({ name: 'Story' }).exists()).toBe(true);
+        expect(wrapper.findComponent({ name: 'StoryView' }).exists()).toBe(true);
     });
 
     it('close full screen test', async () => {
@@ -83,13 +86,17 @@ describe('full screen story component test', () => {
             }
         };
 
-        const StoryList = {
+        const StoryNavbarList = {
             template: '<story @clickingStory="emitClickingStory"></story>',
             components: { Story },
             props: {
                 stories: {
                     type: Array,
                     reguired: false
+                },
+                activeStory: {
+                    type: Object,
+                    required: false
                 }
             },
             methods: {
@@ -103,7 +110,9 @@ describe('full screen story component test', () => {
             propsData: { stories: [], viewingStory: {} },
             stubs: {
                 Story,
-                StoryList
+                StoryNavbarList,
+                NavButtons: true,
+                ProgressBar: true
             }
         });
 

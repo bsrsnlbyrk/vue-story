@@ -1,15 +1,25 @@
 <template>
   <div class="full-screen-wrapper">
-    <button @click="closeStory">Close</button>
-    <progress-bar></progress-bar>
-    <nav-buttons></nav-buttons>
-    <story-list :stories="stories" @changeViewingStory="changeViewingStory"></story-list>
-    <story-view :viewingStory="viewingStory"></story-view>
+    <div :class="customLeftColClass">
+      <story-navbar-list
+        :stories="stories"
+        :activeStory="viewingStory"
+        @changeViewingStory="changeViewingStory"
+      ></story-navbar-list>
+    </div>
+    <div :class="customRightColClass">
+      <button :class="customCloseButtonClass" @click="closeStory">Close</button>
+      <progress-bar></progress-bar>
+      <nav-buttons></nav-buttons>
+      <story-view :viewingStory="viewingStory"></story-view>
+    </div>
   </div>
 </template>
 <script>
-import StoryList from '../story-list/story-list';
-import StoryView from '../story-view/story-view';
+import StoryNavbarList from "../story-navbar/story-navbar-list/story-navbar-list";
+import StoryView from "../story-view/story-view";
+import ProgressBar from "../progress-bar/progress-bar";
+import NavButtons from "../nav-buttons/nav-buttons";
 
 export default {
   name: "full-screen-story",
@@ -21,15 +31,43 @@ export default {
     viewingStory: {
       type: Object,
       required: true
+    },
+    rightColClass: {
+      type: String,
+      required: false,
+      default: 'right-col'
+    },
+    leftColClass: {
+      type: String,
+      required: false,
+      default: 'left-col'
+    },
+    closeButtonClass: {
+      type: String,
+      required: false,
+      default: 'close-button'
     }
   },
   components: {
-    StoryList,
-    StoryView
+    StoryNavbarList,
+    StoryView,
+    ProgressBar,
+    NavButtons
   },
   data() {
     return {
       viewing: null
+    };
+  },
+  computed: {
+    customRightColClass() {
+      return this.rightColClass;
+    },
+    customLeftColClass() {
+      return this.leftColClass;
+    },
+    customCloseButtonClass() {
+      return this.closeButtonClass;
     }
   },
   methods: {
@@ -44,9 +82,23 @@ export default {
 </script>
 <style scoped>
 .full-screen-wrapper {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 100vh;
   z-index: 10000;
   background-color: #333;
+}
+.close-button {
+  justify-self: flex-end;
+  margin-right: 15px;
+  margin-top: 15px;
+  float: right;
+}
+.left-col {
+  width: 40%;
+}
+.right-col {
+  width: 60%;
 }
 </style>
