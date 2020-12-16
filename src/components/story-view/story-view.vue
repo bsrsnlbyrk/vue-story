@@ -29,6 +29,10 @@ export default {
     viewingStory: {
       type: Object,
       required: true
+    },
+    duration: {
+      type: Number,
+      required: true
     }
   },
   components: {
@@ -39,20 +43,36 @@ export default {
   },
   data() {
     return {
+      interval: null,
       swiperOption: {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
         on: {
-          reachEnd: () => {
-            console.log('on reach end');
-            this.$emit('sliderReachEnd')
-          },
-          reachBeginning: () => this.$emit('sliderReachBeginning')
+          reachEnd: () => this.$emit('sliderReachEnd'),
+          reachBeginning: () => this.$emit('sliderReachBeginning'),
+          slideChange: () => {
+            clearInterval(this.interval);
+            this.registerInterval();
+          }
         }
       }
     };
+  },
+  mounted() {
+    this.registerInterval();
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
+  methods: {
+    registerInterval() {
+      this.interval = setInterval(this.triggerNext, this.duration);
+    },
+    triggerNext() {
+      document.querySelector('.swiper-button-next').click();
+    }
   }
 };
 </script>

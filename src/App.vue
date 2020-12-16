@@ -1,6 +1,11 @@
 <template>
   <div>
-    <full-screen-story v-if="hasOpenedStory" :stories="stories" :viewingStory="openedStory">
+    <full-screen-story
+      v-if="hasOpenedStory"
+      :stories="stories"
+      :viewingStory="openedStory"
+      :viewingDuration="viewingDuration"
+    >
       <template v-if="$slots.storyViewLeftNavButton" v-slot:storyViewLeftNavButtonSlot>
         <slot name="storyViewLeftNavButton"></slot>
       </template>
@@ -36,6 +41,13 @@ export default {
     CustomIcon,
     FullScreenStory,
     StoryList
+  },
+  props: {
+    viewingDuration: {
+      type: Number,
+      required: false,
+      default: 1500
+    }
   },
   data() {
     return {

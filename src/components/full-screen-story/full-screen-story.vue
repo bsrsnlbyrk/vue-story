@@ -24,6 +24,7 @@
       </nav-buttons>
       <story-view
         :viewingStory="reactiveViewing"
+        :duration="viewingDuration"
         @sliderReachBeginning="prevStory"
         @sliderReachEnd="nextStory"
       ></story-view>
@@ -46,6 +47,10 @@ export default {
     },
     viewingStory: {
       type: Object,
+      required: true
+    },
+    viewingDuration: {
+      type: Number,
       required: true
     },
     rightColClass: {

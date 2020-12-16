@@ -31,8 +31,12 @@ describe('story view component tests', () => {
                     "isCoverPhoto": false
                   }
                 ]
-            }
+            },
+            duration: 100
         }
+    });
+    it('mounted test', () => {
+        expect(wrapper.vm.interval).not.toBe(null);
     });
 
     it('props test', () => {
@@ -57,5 +61,17 @@ describe('story view component tests', () => {
         
         expect(wrapper.findComponent({ name: 'VideoRenderer' }).exists()).toBe(true);
         expect(wrapper.findComponent({ name: 'ImageRenderer' }).exists()).toBe(false);
+    });
+
+    it('before destroy test', () => {
+        const spyBeforeDestroy = jest.spyOn(StoryView, 'beforeDestroy');
+        const wrapper = mount(StoryView, {
+            propsData: {
+                viewingStory: {},
+                duration: 100
+            }
+        });
+        wrapper.destroy();
+        expect(spyBeforeDestroy).toHaveBeenCalled();
     });
 })
