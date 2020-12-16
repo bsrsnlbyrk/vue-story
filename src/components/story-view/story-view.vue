@@ -2,6 +2,7 @@
   <div class="story-view-wrapper">
     <swiper
       class="swiper"
+      :key="viewingStory.id"
       :options="swiperOption"
       :auto-update="true"
       :auto-destroy="true"
@@ -42,6 +43,13 @@ export default {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
+        },
+        on: {
+          reachEnd: () => {
+            console.log('on reach end');
+            this.$emit('sliderReachEnd')
+          },
+          reachBeginning: () => this.$emit('sliderReachBeginning')
         }
       }
     };

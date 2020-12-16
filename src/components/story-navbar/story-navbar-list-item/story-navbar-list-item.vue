@@ -1,7 +1,7 @@
 <template>
   <div :class="['story-navbar-list-item', activeClass]" @click="setActiveStory(listItem)">
     <story :story="listItem"></story>
-    <story-info :storyTitle="listItem.title" :updatedDate="listItem.updatedDate"></story-info>
+    <story-info :title="listItem.title" :date="listItem.updatedDate"></story-info>
   </div>
 </template>
 
@@ -33,8 +33,9 @@ export default {
   },
   computed: {
     activeClass() {
-      return this.activeStoryItem && this.activeStoryItem.id === this.listItem.id
-        ? 'active'
+      return this.activeStoryItem &&
+        this.activeStoryItem.id === this.listItem.id
+        ? "active"
         : null;
     }
   },
@@ -44,7 +45,15 @@ export default {
   methods: {
     setActiveStory(story) {
       this.activeStoryItem = story;
+      this.$emit('changeStory', story);
     }
   }
 };
 </script>
+<style scoped>
+.story-navbar-list-item {
+  display: flex;
+  align-items: center;
+  /*justify-content: space-evenly;*/
+}
+</style>

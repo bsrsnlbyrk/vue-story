@@ -43,7 +43,6 @@ export default {
       initialItemNumber: 0,
       swiperOption: {
         slidesPerView: 7,
-        spaceBetween: 30,
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
@@ -77,7 +76,7 @@ export default {
 }
 .swiper {
   height: 300px;
-  width: 100%;
+  width: 800px;
 }
 .swiper-wrapper > div {
   display: inherit;
@@ -85,10 +84,27 @@ export default {
 }
 .swiper-slide {
   display: flex;
-  width: fit-content;
+  width: fit-content !important;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-weight: bold;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  border: 0;
+  background: none;
+  color: #aaa;
+  position: absolute;
+  top: 150px !important;
+  outline-style: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.swiper-button-prev {
+  left: 250px;
+}
+.swiper-button-next {
+  right: 250px;
 }
 </style>

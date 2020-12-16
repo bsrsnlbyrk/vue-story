@@ -1,22 +1,38 @@
 <template>
   <div class="story-navbar-list-wrapper">
-    <story-navbar-list-item
+    <RecycleScroller
+      class="scroller"
+      :items="stories"
+      :item-size="stories.length"
+      key-field="id"
+      v-slot="{ item }"
+    >
+      <div class="story-navbar-list-item" @click="changeViewingStoryEmit(item)"> 
+        <img :src="`https://img.piri.net/mnresize/113/-${item.coverPhotoPath}`" width="100" height="100"/>
+        <div class="story-info">
+          <span>{{ item.title }}</span><br />
+          <span>{{ item.updatedDate }}</span>
+        </div>
+      </div>
+    </RecycleScroller>
+    <!-- <story-navbar-list-item
       v-for="story in stories"
       :key="story.id"
       :listItem="story"
       :activeStory="activeStory"
+      @changeStory="changeViewingStoryEmit"
     >
-    </story-navbar-list-item>
+    </story-navbar-list-item>-->
   </div>
 </template>
 
 <script>
-import StoryNavbarListItem from '../story-navbar-list-item/story-navbar-list-item'
+// import StoryNavbarListItem from "../story-navbar-list-item/story-navbar-list-item";
 
 export default {
   name: "story-navbar-list",
   components: {
-    StoryNavbarListItem
+    // StoryNavbarListItem
   },
   props: {
     stories: {
@@ -28,6 +44,11 @@ export default {
       required: false,
       default: () => {}
     }
+  },
+  methods: {
+    changeViewingStoryEmit(story) {
+      this.$emit("changeViewingStory", story);
+    }
   }
 };
 </script>
@@ -35,5 +56,16 @@ export default {
 .story-navbar-list-wrapper {
   height: 100vh;
   overflow: scroll;
+}
+.story-navbar-list-item {
+  display: flex;
+  align-items: center;
+}
+img {
+  border-radius: 50%;
+  margin: 10px 10px 10px;
+}
+.story-info {
+  color: #fff;
 }
 </style>

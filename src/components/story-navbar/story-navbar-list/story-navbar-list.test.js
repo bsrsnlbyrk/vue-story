@@ -31,12 +31,18 @@ describe('story navbar list component tests', () => {
     });
 
     it('props test', () => {
-        expect(wrapper.props().stories).not.toBe(null);
-        expect(wrapper.props().stories.length).toBeTruthy();
-        expect(wrapper.props().activeStory).not.toBe(null);
+      expect(wrapper.props().stories).not.toBe(null);
+      expect(wrapper.props().stories.length).toBeTruthy();
+      expect(wrapper.props().activeStory).not.toBe(null);
     });
 
-    it('components existence test', () => {
-        expect(wrapper.findComponent({ name: 'StoryNavbarListItem' }).exists()).toBe(true);
+    /* it('components existence test', () => {
+      expect(wrapper.findComponent({ name: 'StoryNavbarListItem' }).exists()).toBe(true);
+    }); */
+
+    it('emit event test', () => {
+      wrapper.vm.$emit('changeViewingStory', wrapper.props().activeStory);
+      expect(wrapper.emitted('changeViewingStory')).toBeTruthy();
+      expect(wrapper.emitted('changeViewingStory')[0]).toEqual([wrapper.props().activeStory]);
     });
 })

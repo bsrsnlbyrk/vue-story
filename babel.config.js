@@ -8,8 +8,8 @@ module.exports = {
         "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
       },
       "test": {
-        "plugins": ["babel-jest", "@babel/plugin-transform-runtime"]
-      }
+        "plugins": ["babel-jest", "@babel/plugin-transform-runtime", "@babel/plugin-transform-modules-commonjs"]
+      }   
     }]
   ],
   "plugins": [
@@ -17,7 +17,7 @@ module.exports = {
   ],
   "env": {
     "test": {
-      "presets": ["env"]
+      "presets": ["env", ["@babel/preset-env", {"targets": {"node": "current"}}]]
     }
   }
 }

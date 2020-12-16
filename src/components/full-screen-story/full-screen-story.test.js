@@ -34,6 +34,9 @@ describe('full screen story component test', () => {
                 "updatedDate": "2020-12-02T14:12:43Z",
                 "coverPhotoPath": "/piri/upload/image/2020/12/2/fab5e6d0-0ukifkg6s4jcjuhpe53wzj.jpg"
             }
+        },
+        stubs: {
+            RecycleScroller: true
         }
     });
 
@@ -47,15 +50,18 @@ describe('full screen story component test', () => {
         expect(wrapper.findComponent({ name: 'ProgressBar' }).exists()).toBe(true);
         expect(wrapper.findComponent({ name: 'NavButtons' }).exists()).toBe(true);
         expect(wrapper.findComponent({ name: 'StoryNavbarList' }).exists()).toBe(true);
-        expect(wrapper.findComponent({ name: 'StoryNavbarListItem' }).exists()).toBe(true);
-        expect(wrapper.findComponent({ name: 'Story' }).exists()).toBe(true);
+        // expect(wrapper.findComponent({ name: 'StoryNavbarListItem' }).exists()).toBe(true);
+        // expect(wrapper.findComponent({ name: 'Story' }).exists()).toBe(true);
         expect(wrapper.findComponent({ name: 'StoryView' }).exists()).toBe(true);
     });
 
     it('close full screen test', async () => {
         const spyCloseStory = jest.spyOn(FullScreenStory.methods, 'closeStory');
         const wrapper = mount(FullScreenStory, { 
-            propsData: { stories: [], viewingStory: {} }
+            propsData: { stories: [], viewingStory: {} },
+            stubs: {
+                RecycleScroller: true
+            }
         });
 
         wrapper.vm.$eventHub = new Vue();
@@ -70,7 +76,7 @@ describe('full screen story component test', () => {
     it('change viewing story test', async () => {
         const spychangeViewingStory = jest.spyOn(FullScreenStory.methods, 'changeViewingStory');
         
-        const Story = {
+        /* const Story = {
             name: 'Story',
             template: '<button id="story" @click="emitClick">Close</button>',
             props: {
@@ -84,43 +90,47 @@ describe('full screen story component test', () => {
                     this.$emit('clickingStory', this.$options.propsData)
                 }
             }
-        };
+        }; */
 
         const StoryNavbarList = {
-            template: '<story @clickingStory="emitClickingStory"></story>',
-            components: { Story },
+            template: 
+              '<div class="story-navbar-list-item" @click="changeViewingStoryEmit(item)"></div>',
             props: {
-                stories: {
-                    type: Array,
-                    reguired: false
-                },
-                activeStory: {
-                    type: Object,
-                    required: false
-                }
+              stories: {
+                type: Array,
+                reguired: false
+              },
+              activeStory: {
+                type: Object,
+                required: false
+              }
+            },
+            data() {
+              return {
+                item: {}
+              }
             },
             methods: {
-                emitClickingStory(story) {
-                    this.$emit('changeViewingStory', story);
-                }
+              changeViewingStoryEmit(story) {
+                this.$emit('changeViewingStory', story);
+              }
             }
         };
 
         const wrapper = shallowMount(FullScreenStory, { 
             propsData: { stories: [], viewingStory: {} },
             stubs: {
-                Story,
                 StoryNavbarList,
                 NavButtons: true,
                 ProgressBar: true
             }
         });
 
-        const story = wrapper.find('#story');
+        const story = wrapper.find('.story-navbar-list-item');
         
         await story.trigger('click');
 
         expect(spychangeViewingStory).toHaveBeenCalled();
-        expect(wrapper.vm.viewing).toEqual({});
+        expect(wrapper.vm.viewing).toEqual(StoryNavbarList.data().item);
     });
 });

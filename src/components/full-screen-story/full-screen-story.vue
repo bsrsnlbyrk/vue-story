@@ -3,15 +3,30 @@
     <div :class="customLeftColClass">
       <story-navbar-list
         :stories="stories"
-        :activeStory="viewingStory"
+        :activeStory="reactiveViewing"
         @changeViewingStory="changeViewingStory"
       ></story-navbar-list>
     </div>
     <div :class="customRightColClass">
-      <button :class="customCloseButtonClass" @click="closeStory">Close</button>
+      <close-button :class="customCloseButtonClass" @clicked="closeStory">
+        <template v-slot:closeButton>
+          <slot name="closeButtonSlot"></slot>
+        </template>
+      </close-button>
       <progress-bar></progress-bar>
-      <nav-buttons></nav-buttons>
-      <story-view :viewingStory="viewingStory"></story-view>
+      <nav-buttons>
+        <template v-slot:leftNavButton>
+          <slot name="storyViewLeftNavButtonSlot"></slot>
+        </template>
+        <template v-slot:rightNavButton>
+          <slot name="storyViewRightNavButtonSlot"></slot>
+        </template>
+      </nav-buttons>
+      <story-view
+        :viewingStory="reactiveViewing"
+        @sliderReachBeginning="prevStory"
+        @sliderReachEnd="nextStory"
+      ></story-view>
     </div>
   </div>
 </template>
@@ -19,7 +34,8 @@
 import StoryNavbarList from "../story-navbar/story-navbar-list/story-navbar-list";
 import StoryView from "../story-view/story-view";
 import ProgressBar from "../progress-bar/progress-bar";
-import NavButtons from "../nav-buttons/nav-buttons";
+import NavButtons from "../button/nav-buttons/nav-buttons";
+import CloseButton from "../button/close-button";
 
 export default {
   name: "full-screen-story",
@@ -35,24 +51,25 @@ export default {
     rightColClass: {
       type: String,
       required: false,
-      default: 'right-col'
+      default: "right-col"
     },
     leftColClass: {
       type: String,
       required: false,
-      default: 'left-col'
+      default: "left-col"
     },
     closeButtonClass: {
       type: String,
       required: false,
-      default: 'close-button'
+      default: "close-button"
     }
   },
   components: {
     StoryNavbarList,
     StoryView,
     ProgressBar,
-    NavButtons
+    NavButtons,
+    CloseButton
   },
   data() {
     return {
@@ -68,7 +85,13 @@ export default {
     },
     customCloseButtonClass() {
       return this.closeButtonClass;
+    },
+    reactiveViewing() {
+      return this.viewing;
     }
+  },
+  created() {
+    this.viewing = this.viewingStory;
   },
   methods: {
     closeStory() {
@@ -76,6 +99,14 @@ export default {
     },
     changeViewingStory(story) {
       this.viewing = story;
+    },
+    prevStory() {
+      const nextIndex = this.stories.map(story => story.id).indexOf(this.viewing.id) - 1;
+      this.viewing = this.stories[nextIndex];
+    },
+    nextStory() {
+      const nextIndex = this.stories.map(story => story.id).indexOf(this.viewing.id) + 1;
+      this.viewing = this.stories[nextIndex];
     }
   }
 };
