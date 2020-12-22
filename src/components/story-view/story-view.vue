@@ -2,6 +2,7 @@
   <div class="story-view-wrapper">
     <swiper
       class="swiper"
+      ref="storyItemsSwiper"
       :key="viewingStory.id"
       :options="swiperOption"
       :auto-update="true"
@@ -11,7 +12,14 @@
     >
       <swiper-slide v-for="(storyItem, index) in viewingStory.stories" :key="storyItem.id">
         <image-renderer v-if="storyItem.type === 'photo'" :item="storyItem"></image-renderer>
-        <video-renderer v-else-if="storyItem.type === 'video'" :item="storyItem" :indexNumber="index" :parentInterval="interval" @registerVideoInterval="registerInterval"></video-renderer>
+        <video-renderer
+          v-else-if="storyItem.type === 'video'"
+          :item="storyItem"
+          :indexNumber="index"
+          :activeIndex="activeIndex"
+          @clearParentInterval="removeInternal()"
+          @slideNext="slideNext()"
+        ></video-renderer>
       </swiper-slide>
     </swiper>
   </div>
@@ -44,15 +52,15 @@ export default {
   data() {
     return {
       interval: null,
-      videoItem: null,
+      activeIndex: null,
       swiperOption: {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
         on: {
-          reachEnd: () => this.$emit('sliderReachEnd'),
-          reachBeginning: () => this.$emit('sliderReachBeginning'),
+          reachEnd: () => this.$emit("sliderReachEnd"),
+          reachBeginning: () => this.$emit("sliderReachBeginning"),
           slideChange: () => {
             clearInterval(this.interval);
             this.registerInterval();
@@ -61,54 +69,54 @@ export default {
       }
     };
   },
-  mounted() {
-    /* const keys = Object.keys(this.$refs);
-    keys.map(key => {
-      const videoItem = this.$refs[key];
-
-      if(videoItem) {
-        // console.log(videoItem, Number(videoItem[0].$el.duration));
-        videoItem[0].$el.on('loadedmetadata', function() {
-          console.log(this.duration);
-        });
-          // this.registerInterval(this.duration) }
-      } else {
-        this.registerInterval();
-      }
-    }); */
+  created() {
     this.registerInterval();
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.activeIndex = this.$refs.storyItemsSwiper.$swiper.activeIndex;
+    });
+  },
   beforeDestroy() {
-    clearInterval(this.interval);
+    this.removeInternal();
   },
   methods: {
     registerInterval(time = this.duration) {
-      console.log(time);
       this.interval = setInterval(this.triggerNext, time);
     },
+    removeInternal() {
+      clearInterval(this.interval);
+    },
     triggerNext() {
-      document.querySelector('.swiper-button-next').click();
+      // document.querySelector(".swiper-button-next").click();
+      this.$refs.storyItemsSwiper.$swiper.slideNext();
+    },
+    slideNext() {
+      if (this.$refs.storyItemsSwiper) {
+        this.$refs.storyItemsSwiper.$swiper.slideNext();
+        this.activeIndex += 1;
+      }
     }
   }
 };
 </script>
 <style>
 .story-view-wrapper {
-    width: 50%;
-    height: 100%;
-    /*display: flex;*/
+  width: 50%;
+  height: 100%;
+  /*display: flex;*/
 }
 .swiper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 .swiper-wrapper {
-    height: 90%;
+  height: 90%;
 }
 .swiper-slide {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 </style>
