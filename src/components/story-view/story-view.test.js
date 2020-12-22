@@ -41,7 +41,7 @@ describe('story view component tests', () => {
 
     it('props test', () => {
         expect(wrapper.props().viewingStory).not.toBe(null);
-        expect(Object.keys(wrapper.props().viewingStory)).toBeTruthy();
+        expect(Object.keys(wrapper.props().viewingStory).length).toBeTruthy();
     });
 
     it('components test', () => {

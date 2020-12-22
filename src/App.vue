@@ -46,7 +46,7 @@ export default {
     viewingDuration: {
       type: Number,
       required: false,
-      default: 1500
+      default: 2000
     }
   },
   data() {
