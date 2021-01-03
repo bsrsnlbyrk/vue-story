@@ -19,6 +19,7 @@
           :activeIndex="activeIndex"
           @clearParentInterval="removeInternal()"
           @slideNext="slideNext()"
+          @setDurationData="setDurationData"
         ></video-renderer>
       </swiper-slide>
     </swiper>
@@ -53,15 +54,30 @@ export default {
     return {
       interval: null,
       activeIndex: null,
+      videoItemDuration: null,
       swiperOption: {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
         on: {
-          reachEnd: () => this.$emit("sliderReachEnd"),
+          reachEnd: () => {
+            if (this.videoItemDuration) {
+              setTimeout(() => {
+                this.$emit("sliderReachEnd")
+                this.registerInterval();
+                this.videoItemDuration = null;
+                this.activeIndex = 0;
+              }, this.videoItemDuration * 1000);  // set video duration as interval in ms
+            } else {
+              this.$emit("sliderReachEnd");
+            }
+          },
           reachBeginning: () => this.$emit("sliderReachBeginning"),
           slideChange: () => {
+            if (this.videoItemDuration) {
+              this.activeIndex = this.$refs.storyItemsSwiper.$swiper.realIndex;
+            }
             clearInterval(this.interval);
             this.registerInterval();
           }
@@ -82,20 +98,18 @@ export default {
   },
   methods: {
     registerInterval(time = this.duration) {
-      this.interval = setInterval(this.triggerNext, time);
+      this.interval = setInterval(this.slideNext, time);
     },
     removeInternal() {
       clearInterval(this.interval);
     },
-    triggerNext() {
-      // document.querySelector(".swiper-button-next").click();
-      this.$refs.storyItemsSwiper.$swiper.slideNext();
-    },
     slideNext() {
       if (this.$refs.storyItemsSwiper) {
         this.$refs.storyItemsSwiper.$swiper.slideNext();
-        this.activeIndex += 1;
       }
+    },
+    setDurationData(duration) {
+      this.videoItemDuration = duration;
     }
   }
 };

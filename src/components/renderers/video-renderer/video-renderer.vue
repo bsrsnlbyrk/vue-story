@@ -19,6 +19,11 @@ export default {
       default: 0
     }
   },
+  data() {
+    return {
+      videoItem: null
+    };
+  },
   computed: {
     videoSrc() {
       return `https://image.piri.net${this.item.filePath}`;
@@ -29,19 +34,32 @@ export default {
   },
   watch: {
     activeVideoItem(val) {
+      
       if (val) {
-        this.$emit('clearParentInterval');
-        document.getElementById(`video-${this.indexNumber}`).play();
+        this.$emit("clearParentInterval");
+        this.videoItem.play();
       } else {
-        document.getElementById(`video-${this.indexNumber}`).pause();
+        this.videoItem.pause();
+        this.videoItem.currentTime = 0;
       }
     }
   },
   mounted() {
-    const videoItem = document.getElementById(`video-${this.indexNumber}`);
-    videoItem.onended = function() {
-      this.__vue__.$emit('slideNext');
+    this.videoItem = document.getElementById(`video-${this.indexNumber}`);
+    this.videoItem.onloadedmetadata = function() {
+      this.__vue__.$emit("setDurationData", this.duration);
     };
+    this.videoItem.onended = function() {
+      this.__vue__.$emit("slideNext");
+    };
+
+    if (this.activeVideoItem) {
+      this.$emit("clearParentInterval");
+      this.videoItem.play();
+    } else {
+      this.videoItem.pause();
+      this.videoItem.currentTime = 0;
+    }
   }
 };
 </script>
