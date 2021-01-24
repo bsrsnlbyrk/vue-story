@@ -11,10 +11,6 @@ describe('story component tests', () => {
             }
         }
     });
-    it('click event binding test', () => {
-        expect(wrapper.vm.$refs.xyz.click).not.toBe(undefined);
-    });
-    
     it('rendering story cover', () => {
         expect(wrapper.get('img'));
     });

@@ -1,11 +1,14 @@
 <template>
-  <button class="close-button" @click="clickEmit">
-    <slot name="closeButton"></slot>
+  <button
+    class="close-button"
+    @click="clickEmit"
+  >
+    <slot name="closeButton" />
   </button>
 </template>
 <script>
 export default {
-  name: "close-button",
+  name: "CloseButton",
   methods: {
     clickEmit() {
       this.$emit("clicked");

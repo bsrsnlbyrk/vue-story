@@ -1,9 +1,13 @@
 <template>
-  <video :src="videoSrc" class="story-item" :id="`video-${indexNumber}`"></video>
+  <video
+    :id="`video-${indexNumber}`"
+    :src="videoSrc"
+    class="story-item"
+  />
 </template>
 <script>
 export default {
-  name: "video-renderer",
+  name: "VideoRenderer",
   props: {
     item: {
       type: Object,

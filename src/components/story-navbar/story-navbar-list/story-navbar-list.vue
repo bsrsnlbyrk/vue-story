@@ -1,16 +1,23 @@
 <template>
   <div class="story-navbar-list-wrapper">
     <RecycleScroller
+      v-slot="{ item }"
       class="scroller"
       :items="stories"
       :item-size="stories.length"
       key-field="id"
-      v-slot="{ item }"
     >
-      <div class="story-navbar-list-item" @click="changeViewingStoryEmit(item)"> 
-        <img :src="`https://img.piri.net/mnresize/113/-${item.coverPhotoPath}`" width="100" height="100"/>
+      <div
+        class="story-navbar-list-item"
+        @click="changeViewingStoryEmit(item)"
+      > 
+        <img
+          :src="`https://img.piri.net/mnresize/113/-${item.coverPhotoPath}`"
+          width="100"
+          height="100"
+        >
         <div class="story-info">
-          <span>{{ item.title }}</span><br />
+          <span>{{ item.title }}</span><br>
           <span>{{ item.updatedDate }}</span>
         </div>
       </div>
@@ -30,7 +37,7 @@
 // import StoryNavbarListItem from "../story-navbar-list-item/story-navbar-list-item";
 
 export default {
-  name: "story-navbar-list",
+  name: "StoryNavbarList",
   components: {
     // StoryNavbarListItem
   },

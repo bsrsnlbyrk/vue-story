@@ -1,7 +1,13 @@
 <template>
-  <div :class="['story-navbar-list-item', activeClass]" @click="setActiveStory(listItem)">
-    <story :story="listItem"></story>
-    <story-info :title="listItem.title" :date="listItem.updatedDate"></story-info>
+  <div
+    :class="['story-navbar-list-item', activeClass]"
+    @click="setActiveStory(listItem)"
+  >
+    <story :story="listItem" />
+    <story-info
+      :title="listItem.title"
+      :date="listItem.updatedDate"
+    />
   </div>
 </template>
 
@@ -10,7 +16,7 @@ import Story from "../../story/story";
 import StoryInfo from "../../story-info/story-info";
 
 export default {
-  name: "story-navbar-list-item",
+  name: "StoryNavbarListItem",
   components: {
     Story,
     StoryInfo

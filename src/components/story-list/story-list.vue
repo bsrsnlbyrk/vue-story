@@ -1,21 +1,30 @@
 <template>
   <div class="story-list">
     <swiper
-      class="swiper"
       ref="serpPostsModuleSwiper"
+      class="swiper"
       :options="swiperOption"
       :auto-update="true"
       :auto-destroy="true"
       :delete-instance-on-destroy="true"
       :cleanup-styles-on-destroy="false"
     >
-      <swiper-slide v-for="story in slicedStories" :key="story.id">
-        <story :story="story"></story>
+      <swiper-slide
+        v-for="story in slicedStories"
+        :key="story.id"
+      >
+        <story :story="story" />
       </swiper-slide>
     </swiper>
     <div>
-      <button class="swiper-button-prev" @click="goBack"></button>
-      <button class="swiper-button-next" @click="goNext"></button>
+      <button
+        class="swiper-button-prev"
+        @click="goBack"
+      />
+      <button
+        class="swiper-button-next"
+        @click="goNext"
+      />
     </div>
   </div>
 </template>
@@ -25,17 +34,17 @@ import "swiper/css/swiper.css";
 import Story from "../story/story";
 
 export default {
-  name: "story-list",
+  name: "StoryList",
+  components: {
+    Story,
+    Swiper,
+    SwiperSlide
+  },
   props: {
     stories: {
       type: Array,
       required: true
     }
-  },
-  components: {
-    Story,
-    Swiper,
-    SwiperSlide
   },
   data() {
     return {

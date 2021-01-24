@@ -1,13 +1,13 @@
 <template>
   <div class="story-info-wrapper">
     <span>{{ title }}</span>
-    <br />
+    <br>
     <span>{{ date }}</span>
   </div>
 </template>
 <script>
 export default {
-  name: "story-info",
+  name: "StoryInfo",
   props: {
     title: {
       type: String,

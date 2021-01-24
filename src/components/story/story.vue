@@ -1,12 +1,15 @@
 <template>
-  <div class="story" @click="openStory">
-    <img :src="coverPhoto" />
+  <div
+    class="story"
+    @click="openStory"
+  >
+    <img :src="coverPhoto">
   </div>
 </template>
 
 <script>
 export default {
-  name: "story",
+  name: "Story",
   props: {
     story: {
       type: Object,

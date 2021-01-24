@@ -3,31 +3,34 @@
     <div :class="customLeftColClass">
       <story-navbar-list
         :stories="stories"
-        :activeStory="reactiveViewing"
+        :active-story="reactiveViewing"
         @changeViewingStory="changeViewingStory"
-      ></story-navbar-list>
+      />
     </div>
     <div :class="customRightColClass">
-      <close-button :class="customCloseButtonClass" @clicked="closeStory">
+      <close-button
+        :class="customCloseButtonClass"
+        @clicked="closeStory"
+      >
         <template v-slot:closeButton>
-          <slot name="closeButtonSlot"></slot>
+          <slot name="closeButtonSlot" />
         </template>
       </close-button>
-      <progress-bar></progress-bar>
+      <progress-bar />
       <nav-buttons>
         <template v-slot:leftNavButton>
-          <slot name="storyViewLeftNavButtonSlot"></slot>
+          <slot name="storyViewLeftNavButtonSlot" />
         </template>
         <template v-slot:rightNavButton>
-          <slot name="storyViewRightNavButtonSlot"></slot>
+          <slot name="storyViewRightNavButtonSlot" />
         </template>
       </nav-buttons>
       <story-view
-        :viewingStory="reactiveViewing"
+        :viewing-story="reactiveViewing"
         :duration="viewingDuration"
         @sliderReachBeginning="prevStory"
         @sliderReachEnd="nextStory"
-      ></story-view>
+      />
     </div>
   </div>
 </template>
@@ -39,7 +42,14 @@ import NavButtons from "../button/nav-buttons/nav-buttons";
 import CloseButton from "../button/close-button";
 
 export default {
-  name: "full-screen-story",
+  name: "FullScreenStory",
+  components: {
+    StoryNavbarList,
+    StoryView,
+    ProgressBar,
+    NavButtons,
+    CloseButton
+  },
   props: {
     stories: {
       type: Array,
@@ -68,13 +78,6 @@ export default {
       required: false,
       default: "close-button"
     }
-  },
-  components: {
-    StoryNavbarList,
-    StoryView,
-    ProgressBar,
-    NavButtons,
-    CloseButton
   },
   data() {
     return {

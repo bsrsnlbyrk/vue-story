@@ -1,13 +1,17 @@
 <template>
-  <img :src="imgSrc" :alt="alt" class="story-item" />
+  <img
+    :src="imgSrc"
+    :alt="alt"
+    class="story-item"
+  >
 </template>
 <script>
 export default {
-  name: "image-renderer",
+  name: "ImageRenderer",
   props: {
     item: {
       type: Object,
-      reuired: true
+      required: true
     },
     alt: {
       type: String,

@@ -1,26 +1,32 @@
 <template>
   <div class="story-view-wrapper">
     <swiper
-      class="swiper"
       ref="storyItemsSwiper"
       :key="viewingStory.id"
+      class="swiper"
       :options="swiperOption"
       :auto-update="true"
       :auto-destroy="true"
       :delete-instance-on-destroy="true"
       :cleanup-styles-on-destroy="false"
     >
-      <swiper-slide v-for="(storyItem, index) in viewingStory.stories" :key="storyItem.id">
-        <image-renderer v-if="storyItem.type === 'photo'" :item="storyItem"></image-renderer>
+      <swiper-slide
+        v-for="(storyItem, index) in viewingStory.stories"
+        :key="storyItem.id"
+      >
+        <image-renderer
+          v-if="storyItem.type === 'photo'"
+          :item="storyItem"
+        />
         <video-renderer
           v-else-if="storyItem.type === 'video'"
           :item="storyItem"
-          :indexNumber="index"
-          :activeIndex="activeIndex"
+          :index-number="index"
+          :active-index="activeIndex"
           @clearParentInterval="removeInternal()"
           @slideNext="slideNext()"
           @setDurationData="setDurationData"
-        ></video-renderer>
+        />
       </swiper-slide>
     </swiper>
   </div>
@@ -33,7 +39,13 @@ import ImageRenderer from "../renderers/image-renderer/image-renderer";
 import VideoRenderer from "../renderers/video-renderer/video-renderer";
 
 export default {
-  name: "story-view",
+  name: "StoryView",
+  components: {
+    ImageRenderer,
+    VideoRenderer,
+    Swiper,
+    SwiperSlide
+  },
   props: {
     viewingStory: {
       type: Object,
@@ -43,12 +55,6 @@ export default {
       type: Number,
       required: true
     }
-  },
-  components: {
-    ImageRenderer,
-    VideoRenderer,
-    Swiper,
-    SwiperSlide
   },
   data() {
     return {

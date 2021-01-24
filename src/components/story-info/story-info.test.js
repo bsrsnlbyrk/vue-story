@@ -12,10 +12,4 @@ describe('story info component tests', () => {
     it('props test', () => {
         expect(wrapper.props().title).toBe('Pirelli Tire Building');
     });
-
-    it('render test', () => {
-        expect(wrapper.html()).toBe(
-          `<div><span>${wrapper.props().title}</span> <span>${wrapper.props().date}</span></div>`
-        );
-    });
 });
