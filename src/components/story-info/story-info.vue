@@ -1,7 +1,7 @@
 <template>
   <div class="story-info-wrapper">
     <span>{{ title }}</span>
-    <br>
+    <br />
     <span>{{ date }}</span>
   </div>
 </template>
@@ -12,19 +12,20 @@ export default {
     title: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     date: {
       type: String,
       required: false,
-      default: null
-    }
-  }
+      default: null,
+    },
+  },
 };
 </script>
 <style scoped>
 .story-info-wrapper {
-    color: #fff;
-    display: block;
+  color: #fff;
+  display: block;
+  text-align: left;
 }
 </style>

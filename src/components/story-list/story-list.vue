@@ -9,22 +9,13 @@
       :delete-instance-on-destroy="true"
       :cleanup-styles-on-destroy="false"
     >
-      <swiper-slide
-        v-for="story in slicedStories"
-        :key="story.id"
-      >
+      <swiper-slide v-for="story in slicedStories" :key="story.id">
         <story :story="story" />
       </swiper-slide>
     </swiper>
     <div>
-      <button
-        class="swiper-button-prev"
-        @click="goBack"
-      />
-      <button
-        class="swiper-button-next"
-        @click="goNext"
-      />
+      <button class="swiper-button-prev" @click="goBack" />
+      <button class="swiper-button-next" @click="goNext" />
     </div>
   </div>
 </template>
@@ -38,13 +29,13 @@ export default {
   components: {
     Story,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   props: {
     stories: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -54,15 +45,15 @@ export default {
         slidesPerView: 7,
         navigation: {
           nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        }
-      }
+          prevEl: ".swiper-button-prev",
+        },
+      },
     };
   },
   computed: {
     slicedStories() {
       return this.stories.slice(0, this.itemNumber);
-    }
+    },
   },
   mounted() {
     this.initialItemNumber = this.itemNumber;
@@ -75,21 +66,23 @@ export default {
       if (this.itemNumber > this.initialItemNumber) {
         this.itemNumber -= 1;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
 .story-list {
   display: flex;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 .swiper {
-  height: 300px;
-  width: 800px;
+  height: 100%;
+  width: 100%;
 }
 .swiper-wrapper > div {
   display: inherit;
-  overflow-x: scroll;
 }
 .swiper-slide {
   display: flex;
@@ -101,19 +94,23 @@ export default {
 }
 .swiper-button-prev,
 .swiper-button-next {
-  border: 0;
-  background: none;
-  color: #aaa;
   position: absolute;
-  top: 150px !important;
+  top: 55%;
+  border: 0;
+  color: #fff;
+  background-color: #000;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
   outline-style: none;
-  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.swiper-button-prev {
-  left: 250px;
-}
-.swiper-button-next {
-  right: 250px;
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  width: 1rem;
+  height: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  top: 0;
 }
 </style>

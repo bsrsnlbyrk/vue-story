@@ -8,10 +8,7 @@
       />
     </div>
     <div :class="customRightColClass">
-      <close-button
-        :class="customCloseButtonClass"
-        @clicked="closeStory"
-      >
+      <close-button :class="customCloseButtonClass" @clicked="closeStory">
         <template v-slot:closeButton>
           <slot name="closeButtonSlot" />
         </template>
@@ -48,40 +45,40 @@ export default {
     StoryView,
     ProgressBar,
     NavButtons,
-    CloseButton
+    CloseButton,
   },
   props: {
     stories: {
       type: Array,
-      required: true
+      required: true,
     },
     viewingStory: {
       type: Object,
-      required: true
+      required: true,
     },
     viewingDuration: {
       type: Number,
-      required: true
+      required: true,
     },
     rightColClass: {
       type: String,
       required: false,
-      default: "right-col"
+      default: "right-col",
     },
     leftColClass: {
       type: String,
       required: false,
-      default: "left-col"
+      default: "left-col",
     },
     closeButtonClass: {
       type: String,
       required: false,
-      default: "close-button"
-    }
+      default: "close-button",
+    },
   },
   data() {
     return {
-      viewing: null
+      viewing: null,
     };
   },
   computed: {
@@ -96,7 +93,7 @@ export default {
     },
     reactiveViewing() {
       return this.viewing;
-    }
+    },
   },
   created() {
     this.viewing = this.viewingStory;
@@ -109,35 +106,41 @@ export default {
       this.viewing = story;
     },
     prevStory() {
-      const nextIndex = this.stories.map(story => story.id).indexOf(this.viewing.id) - 1;
+      const nextIndex =
+        this.stories.map((story) => story.id).indexOf(this.viewing.id) - 1;
       this.viewing = this.stories[nextIndex];
     },
     nextStory() {
-      const nextIndex = this.stories.map(story => story.id).indexOf(this.viewing.id) + 1;
+      const nextIndex =
+        this.stories.map((story) => story.id).indexOf(this.viewing.id) + 1;
       this.viewing = this.stories[nextIndex];
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
 .full-screen-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  z-index: 10000;
   background-color: #333;
+  overflow: hidden;
 }
 .close-button {
-  justify-self: flex-end;
-  margin-right: 15px;
-  margin-top: 15px;
   float: right;
+  cursor: pointer;
 }
 .left-col {
   width: 40%;
+  padding: 1rem;
 }
 .right-col {
   width: 60%;
+  padding: 1rem;
 }
 </style>

@@ -7,17 +7,15 @@
       :item-size="stories.length"
       key-field="id"
     >
-      <div
-        class="story-navbar-list-item"
-        @click="changeViewingStoryEmit(item)"
-      > 
+      <div class="story-navbar-list-item" @click="changeViewingStoryEmit(item)">
         <img
           :src="`https://img.piri.net/mnresize/113/-${item.coverPhotoPath}`"
           width="100"
           height="100"
-        >
+        />
         <div class="story-info">
-          <span>{{ item.title }}</span><br>
+          <span>{{ item.title }}</span
+          ><br />
           <span>{{ item.updatedDate }}</span>
         </div>
       </div>
@@ -44,25 +42,29 @@ export default {
   props: {
     stories: {
       type: Array,
-      required: true
+      required: true,
     },
     activeStory: {
       type: Object,
       required: false,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   methods: {
     changeViewingStoryEmit(story) {
       this.$emit("changeViewingStory", story);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
 .story-navbar-list-wrapper {
   height: 100vh;
   overflow: scroll;
+}
+
+.story-navbar-list-wrapper::-webkit-scrollbar {
+  display: none;
 }
 .story-navbar-list-item {
   display: flex;

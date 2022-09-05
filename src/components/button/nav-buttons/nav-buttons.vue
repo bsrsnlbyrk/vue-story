@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  name: "NavButtons"
+  name: "NavButtons",
 };
 </script>
 <style scoped>
@@ -20,5 +20,10 @@ export default {
   background: none;
   color: #aaa;
   width: 30px;
+}
+
+.swiper-button-prev {
+  right: 100px;
+  left: auto;
 }
 </style>

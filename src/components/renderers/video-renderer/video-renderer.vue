@@ -1,9 +1,5 @@
 <template>
-  <video
-    :id="`video-${indexNumber}`"
-    :src="videoSrc"
-    class="story-item"
-  />
+  <video :id="`video-${indexNumber}`" :src="videoSrc" class="story-item" />
 </template>
 <script>
 export default {
@@ -11,21 +7,21 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      required: true,
     },
     indexNumber: {
       type: Number,
-      required: true
+      required: true,
     },
     activeIndex: {
       type: Number,
       required: false,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      videoItem: null
+      videoItem: null,
     };
   },
   computed: {
@@ -34,11 +30,10 @@ export default {
     },
     activeVideoItem() {
       return this.indexNumber === this.activeIndex;
-    }
+    },
   },
   watch: {
     activeVideoItem(val) {
-      
       if (val) {
         this.$emit("clearParentInterval");
         this.videoItem.play();
@@ -46,14 +41,14 @@ export default {
         this.videoItem.pause();
         this.videoItem.currentTime = 0;
       }
-    }
+    },
   },
   mounted() {
     this.videoItem = document.getElementById(`video-${this.indexNumber}`);
-    this.videoItem.onloadedmetadata = function() {
+    this.videoItem.onloadedmetadata = function () {
       this.__vue__.$emit("setDurationData", this.duration);
     };
-    this.videoItem.onended = function() {
+    this.videoItem.onended = function () {
       this.__vue__.$emit("slideNext");
     };
 
@@ -64,7 +59,7 @@ export default {
       this.videoItem.pause();
       this.videoItem.currentTime = 0;
     }
-  }
+  },
 };
 </script>
 <style>

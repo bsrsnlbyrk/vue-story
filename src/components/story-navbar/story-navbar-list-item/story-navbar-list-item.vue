@@ -4,10 +4,7 @@
     @click="setActiveStory(listItem)"
   >
     <story :story="listItem" />
-    <story-info
-      :title="listItem.title"
-      :date="listItem.updatedDate"
-    />
+    <story-info :title="listItem.title" :date="listItem.updatedDate" />
   </div>
 </template>
 
@@ -19,22 +16,22 @@ export default {
   name: "StoryNavbarListItem",
   components: {
     Story,
-    StoryInfo
+    StoryInfo,
   },
   props: {
     listItem: {
       type: Object,
-      required: true
+      required: true,
     },
     activeStory: {
       type: Object,
       required: false,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
-      activeStoryItem: null
+      activeStoryItem: null,
     };
   },
   computed: {
@@ -43,23 +40,28 @@ export default {
         this.activeStoryItem.id === this.listItem.id
         ? "active"
         : null;
-    }
+    },
   },
   created() {
     this.activeStoryItem = this.activeStory;
+    console.log(this.activeStoryItem.id === this.listItem.id);
   },
   methods: {
     setActiveStory(story) {
       this.activeStoryItem = story;
-      this.$emit('changeStory', story);
-    }
-  }
+      this.$emit("changeStory", story);
+    },
+  },
 };
 </script>
 <style scoped>
 .story-navbar-list-item {
   display: flex;
   align-items: center;
-  /*justify-content: space-evenly;*/
+}
+.active {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  transition: all ease 0.5;
 }
 </style>
